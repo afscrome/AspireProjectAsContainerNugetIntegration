@@ -1,0 +1,15 @@
+<Project>
+  <!-- Can you extract these values directly from `ComputeContainerConfig` without needing this custom task? -->
+  <Target Name="OutputComputeContainerConfig" DependsOnTargets="ComputeContainerConfig" Returns="@(_ThisProjectContainerMetadata)">
+    <ItemGroup>
+		<_ThisProjectContainerMetadata Include="$(MSBuildProjectFullPath)">
+			<EnableSdkContainerSupport>$(EnableSdkContainerSupport)</EnableSdkContainerSupport>
+			<ContainerRepository>$(ContainerRepository)</ContainerRepository>
+			<ContainerTag>$(ContainerTag)</ContainerTag>
+			<ContainerRegistry>$(ContainerRegistry)</ContainerRegistry>
+		</_ThisProjectContainerMetadata>
+    </ItemGroup>
+  </Target>
+
+	
+</Project>

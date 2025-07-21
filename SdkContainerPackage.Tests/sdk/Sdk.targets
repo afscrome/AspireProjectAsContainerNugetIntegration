@@ -1,0 +1,27 @@
+﻿<Project>
+  <PropertyGroup>
+    <ContainerTestTag Condition="'$(ContainerTestTag)' == ''">local-test</ContainerTestTag>
+  </PropertyGroup>
+  
+  <Target Name="PublishContainersForTesting" BeforeTargets="VSTest">
+    <MSBuild
+      Projects="@(SdkContainerProject)"
+      BuildInParallel="true"
+      Targets="Publish;PublishContainer"
+      Properties="Configuration=$(Configuration);ContainerImageTag=$(ContainerTestTag);ContainerRegistry=" />
+  </Target>
+
+  <Target Name="SetContainerTestTagAttributes" BeforeTargets="GetAssemblyAttributes">
+    <ItemGroup>
+		<AssemblyAttribute Include="System.Reflection.AssemblyMetadata">
+			<_Parameter1>localcontainertag</_Parameter1>
+			<_Parameter2>$(ContainerTestTag)</_Parameter2>
+		</AssemblyAttribute>
+		<AssemblyAttribute Include="System.Reflection.AssemblyMetadata">
+			<_Parameter1>localcontainerprojects</_Parameter1>
+			<!-- TODO: Make this work with mulitple values-->
+			<_Parameter2>@(SdkContainerProject->'%(FullPath)')</_Parameter2>
+		</AssemblyAttribute>
+	</ItemGroup>
+  </Target>
+</Project>
