@@ -10,7 +10,10 @@ This spike assumes that your apps publish containers  via the .Net SDK.
   For now these live in the project themselves, although longer term they could be generalised into a generic helper package / unstreamed to the core aspire sdk.
 
 - `SdkContainerPackage.Tests` - a test project for running E2E tests on the nuget package with the app running as a container.
-  Includes some magic to try and make sure when you run locally you test against a locally built container with your latest changes, rather than the latest one pushed to your container registry.
+  Includes some magic to try and make sure when you run locally you test against a locally built container.
+  This is helpful for:
+    - Local dev - make sure your testing with code changes to your local projects.
+    - Build server - you can run tests w/out needing to push the container to a remote registry, or only push the image once you've validated all the tests pass.
 
 # Known Issues
 
